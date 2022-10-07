@@ -65,6 +65,32 @@ class List: private Node{
             return newNode;
         }
 
+        bool addNodeAtFront(int valueToBeAdded){
+            /*
+            The idea is to,
+            1. Create a new pointer to a new node from our previous method.
+            2. Store the address of the newly created node.
+            3. Add it at the front by redirecting the header node.
+            */
+
+           try{
+             Node* temporaryPointer = this->createNewNode(valueToBeAdded);
+
+             if(this->isHeadEmpty()){
+                this->setHeadTo(temporaryPointer);
+             }
+             else{
+                temporaryPointer->next = this->getHeader();
+                this->setHeadTo(temporaryPointer);
+             }
+             return true;
+
+           }
+           catch(bool status){
+                return false;
+           }
+        }
+
         bool addNodeAtEnd(int valueToBeAdded){
             /*
             The idea is to,
@@ -118,8 +144,6 @@ class List: private Node{
                     temp = temp->next;
                 }
                 cout<<temp->value<<endl;
-
-                delete temp;
             }
             
         }
@@ -155,6 +179,16 @@ int main(void){
                     cout<<"\nPlease enter the value you want to store: "<<endl;
                     cin>> valueToBeAdded;
                     if(singlyLinkedList->addNodeAtEnd(valueToBeAdded)){
+                        cout<<"The element '"<<valueToBeAdded<<"' has been added to the end of the List successfully."<<endl;
+                    }
+                    else{
+                        cout<<"Sorry, the element could not be added to the end of the list, something went wrong.";
+                    }
+                    break;
+            
+            case 2: cout<<"\nPlease enter the value you want to store: "<<endl;
+                    cin>> valueToBeAdded;
+                    if(singlyLinkedList->addNodeAtFront(valueToBeAdded)){
                         cout<<"The element '"<<valueToBeAdded<<"' has been added to the end of the List successfully."<<endl;
                     }
                     else{
