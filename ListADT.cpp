@@ -40,9 +40,7 @@ class List: private Node{
             this->_totalNodes--;
         }
 
-        int getTotalNumberOfNodes(){
-            return this->_totalNodes;
-        }
+        
 
     public:
     //The constructor->
@@ -55,6 +53,9 @@ class List: private Node{
             this->_totalNodes = 0;
         }
 
+        int getTotalNumberOfNodes(){
+            return this->_totalNodes;
+        }
         
 
         Node* createNewNode(int x){
@@ -129,7 +130,7 @@ class List: private Node{
             /* Objective of this method is to print all elements in the linked list->
             1-> Check if we have any valid nodes that contain any info at all->
             2-> If no, then print a statement saying that we don't have any nodes->
-            3-> If yes, then iterate and print all the values as we go along the list->
+            3-> If yes , then iterate and print all the values as we go along the list->
             */
 
             if(this->isHeadEmpty()){
@@ -190,6 +191,19 @@ int main(void){
                     cin>> valueToBeAdded;
                     if(singlyLinkedList->addNodeAtFront(valueToBeAdded)){
                         cout<<"The element '"<<valueToBeAdded<<"' has been added to the end of the List successfully."<<endl;
+                    }
+                    else{
+                        cout<<"Sorry, the element could not be added to the end of the list, something went wrong.";
+                    }
+                    break;
+            
+            case 3: int position;
+                    cout<<"\nPlease enter the value you want to store: "<<endl;
+                    cin>> valueToBeAdded;
+                    cout<<"Please enter the position at which the value should be added: "<<endl;
+                    cout<<"[NOTE] Please enter a value between 0 to "<<singlyLinkedList->getTotalNumberOfNodes()<<endl;
+                    if(singlyLinkedList->addNodeAtFront(valueToBeAdded)){
+                        cout<<"The element '"<<valueToBeAdded<<"' has been added to the List successfully at position: "<<position<<endl;
                     }
                     else{
                         cout<<"Sorry, the element could not be added to the end of the list, something went wrong.";
