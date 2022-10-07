@@ -10,7 +10,7 @@ class Node{
  
 class List: private Node{
     private:
-        //we shall keep the access to head private-> And share them through Abstraction->
+        //we shall keep the access to head and sensitive members: private, and share them through Abstraction.
         Node *_head;
         int _totalNodes;
 
@@ -24,7 +24,7 @@ class List: private Node{
         }
 
         void setHeadTo(Node *pointer){
-            //we the pointer here would be the address of the first node->
+            //The pointer here would be the address of the first node.
             this->_head->next = pointer;
         }
 
@@ -43,10 +43,10 @@ class List: private Node{
         
 
     public:
-    //The constructor->
+    //The constructor for the list.
         List(){
             this->_head = new Node;
-            //Initialize the linked list header with basic values->
+            //Initialize the linked list header with basic values.
             this->_head->value = 0;
             this->_head->next= NULL;
 
@@ -89,6 +89,45 @@ class List: private Node{
            }
            catch(bool status){
                 return false;
+           }
+        }
+
+        bool addNodeAtAPosition(int valueToBeAdded, int position){
+            /*The idea is to,
+            1. Validate the user input i.e. the POSITION provided.
+            2. If the position is invalid, throw an exception.
+            3. Else, try and insert the value at the specified position.
+            4. If the user enters 0, we will add the node at front.
+            5. If the user enters exact count of nodes available, we shall enter the node at the very end.
+            */
+           try{
+            if(position<0 || position>this->getTotalNumberOfNodes()){
+                throw (string)"[Exception]: Invalid input given, please try again by providing valid input!\n";
+            }
+            else if(position == 0){
+                return this->addNodeAtFront(valueToBeAdded);
+            }
+            else if(position == this->getTotalNumberOfNodes()){
+                return this->addNodeAtEnd(valueToBeAdded);
+            }
+            else{
+                Node* prev;
+                Node* curr = this->getHeader();
+                Node* temporaryPointer = this->createNewNode(valueToBeAdded);
+                int countt=0;
+                while(position!=countt){
+                    prev = curr;
+                    curr = curr->next;
+                    countt++;
+                }
+                temporaryPointer->next = prev->next;
+                prev->next = temporaryPointer;
+            }
+            return true;
+           }
+           catch(string e){
+             cout<<e;
+             return false;
            }
         }
 
@@ -202,11 +241,12 @@ int main(void){
                     cin>> valueToBeAdded;
                     cout<<"Please enter the position at which the value should be added: "<<endl;
                     cout<<"[NOTE] Please enter a value between 0 to "<<singlyLinkedList->getTotalNumberOfNodes()<<endl;
-                    if(singlyLinkedList->addNodeAtFront(valueToBeAdded)){
+                    cin>>position;
+                    if(singlyLinkedList->addNodeAtAPosition(valueToBeAdded, position)){
                         cout<<"The element '"<<valueToBeAdded<<"' has been added to the List successfully at position: "<<position<<endl;
                     }
                     else{
-                        cout<<"Sorry, the element could not be added to the end of the list, something went wrong.";
+                        cout<<"Sorry, the element could not be added to the list."<<endl;
                     }
                     break;
 
