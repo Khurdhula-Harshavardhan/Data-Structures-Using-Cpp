@@ -219,6 +219,28 @@ class List: private Node{
             }
         }
 
+        bool pop(){
+            try{
+            if(this->getHeader() == NULL){
+                cout<<"Sorry this operation cannot be performed as the list is empty."<<endl;
+                throw false;
+            }
+            else{
+                Node* tempPointer =  this->getHeader();
+                this->setHeadTo(this->getHeader()->next);
+                cout<<"Element '"<<tempPointer->value<<"' has been popped from the list.";
+                delete (tempPointer);
+
+                return true;
+
+            }
+            throw false;
+            }
+            catch(bool status){
+                return status;
+            }
+        }
+
         void printLinkedList(void){
             /* Objective of this method is to print all elements in the linked list->
             1-> Check if we have any valid nodes that contain any info at all->
@@ -258,7 +280,7 @@ int main(void){
         cout<<"2. Add a value to the List at the front."<<endl;
         cout<<"3. Add a value to the List at a position."<<endl;
         cout<<"4. Delete a value from the List."<<endl;
-        cout<<"5. Delete at a position in the List."<<endl;
+        cout<<"5. POP (delete an element at the front of the list.)"<<endl;
         cout<<"6. Search for a element in the List."<<endl;
         cout<<"7. Show the elements stored in the List."<<endl;
         cout<<"8. Exit."<<endl;
@@ -319,6 +341,14 @@ int main(void){
                         else{
                             cout<<"Sorry failed to delete the element, something went wrong."<<endl;
                         }
+                    }
+            
+            case 5: 
+                    if(singlyLinkedList -> pop()){
+                        cout<<"Done."<<endl;
+                    }
+                    else{
+                        cout<<"Failed to pop the node from the list."<<endl;
                     }
 
             case 7: singlyLinkedList->printLinkedList();
