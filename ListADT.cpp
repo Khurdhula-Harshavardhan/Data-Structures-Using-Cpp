@@ -165,6 +165,60 @@ class List: private Node{
         }
         }
 
+        bool deleteNodeBasedOnValue(int valueToBeDeleted){
+            /* Objective of this method is to delete an element from the linkedlist, by linerly searching it.
+               1. Check if you have the value in the list by linear search.
+               2. If value is found, assign the previous node to the node after current node.
+               3. Delete the current node.
+               4. If failed to find node or delete the node due to memory or logic error throw false.
+
+               --Additional statements for the same.. If a value is found at the end, just point the previous node to NUll. And delete the last node.
+               --Else if, value is found at the first node, just set header to the alternate node assuming there is one, or to Null.
+            */
+            try{
+                Node* tempPointer = this->getHeader();
+                Node* previousNode;
+
+                if(this->getTotalNumberOfNodes() == 1 && this->getHeader()->value == valueToBeDeleted){
+                    delete this->getHeader();
+                    this->setHeadTo(NULL);
+                    this->decreaseNodeCount();
+                    cout<<"You've now deleted the last remaining element in the list.";
+                    return true;
+                }
+            
+                if(this->getHeader()->value == valueToBeDeleted){
+                    Node* tempPointer = this->getHeader();
+                    this->setHeadTo(this->getHeader()->next);
+                    delete (tempPointer);
+                    this->decreaseNodeCount();
+                    return true;
+                }
+                else
+                while(tempPointer -> next!=NULL){
+                    previousNode = tempPointer;
+                    tempPointer = tempPointer->next;
+                    if(valueToBeDeleted == tempPointer->value){
+                        previousNode->next = tempPointer->next;
+                        delete tempPointer;
+                        this->decreaseNodeCount();
+                        return true;
+                    }
+                    
+                }
+                if(tempPointer -> next == NULL &&  tempPointer->value == valueToBeDeleted){
+                    previousNode -> next = NULL;
+                    delete tempPointer;
+                    this->decreaseNodeCount();
+                    return true;
+                }
+                throw false;
+            }
+            catch(bool status){
+                return false;
+            }
+        }
+
         void printLinkedList(void){
             /* Objective of this method is to print all elements in the linked list->
             1-> Check if we have any valid nodes that contain any info at all->
@@ -177,7 +231,7 @@ class List: private Node{
             }
             else{
                 Node* temp = this->getHeader();
-                
+                cout<<"There are currently "<<this->getTotalNumberOfNodes()<<" no of nodes in the list. \n";
                 cout<<"The elements in the Linked List are: "<<endl;
                 while(temp-> next != NULL){
                     cout<<temp->value<<" ";
@@ -249,6 +303,23 @@ int main(void){
                         cout<<"Sorry, the element could not be added to the list."<<endl;
                     }
                     break;
+            
+            case 4: if(singlyLinkedList->getTotalNumberOfNodes() == 0){
+                        cout<<"The list is currently empty! You may not perform this operation at this time."<<endl;
+                    }
+                    else{
+                        cout<<"Inorder to delete an element, choose a value to be deleted: "<<endl;
+                        singlyLinkedList->printLinkedList();
+                        cout<<"Please enter the value you wish to delete: ";
+                        int valueToBeDeleted;
+                        cin>>valueToBeDeleted;
+                        if(singlyLinkedList->deleteNodeBasedOnValue(valueToBeDeleted)){
+                            cout<<"The value '"<<valueToBeDeleted<<"' has beed deleted successfully!"<<endl;
+                        }
+                        else{
+                            cout<<"Sorry failed to delete the element, something went wrong."<<endl;
+                        }
+                    }
 
             case 7: singlyLinkedList->printLinkedList();
                     break;
@@ -259,6 +330,4 @@ int main(void){
                      break;
         }
     }
-
-
 }
