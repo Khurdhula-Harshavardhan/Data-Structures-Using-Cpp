@@ -241,6 +241,33 @@ class List: private Node{
             }
         }
 
+        bool search(int keyValue){
+            try{
+                Node* temp = this->getHeader();
+
+                if(temp->next == NULL){
+                    cout<<"[ATTENTION] The list is empty."<<endl;
+                    throw false;
+                }
+                else{
+                    
+                    while(temp->next!=NULL){
+                        if(keyValue == temp->value){
+                            return true;
+                        }
+                        temp = temp->next;
+                    }
+                    if(temp->value == keyValue){
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch(bool status){
+                return status;
+            }
+        }
+
         void printLinkedList(void){
             /* Objective of this method is to print all elements in the linked list->
             1-> Check if we have any valid nodes that contain any info at all->
@@ -342,6 +369,7 @@ int main(void){
                             cout<<"Sorry failed to delete the element, something went wrong."<<endl;
                         }
                     }
+                    break;
             
             case 5: 
                     if(singlyLinkedList -> pop()){
@@ -350,6 +378,19 @@ int main(void){
                     else{
                         cout<<"Failed to pop the node from the list."<<endl;
                     }
+                    break;
+            
+            case 6:
+                    cout<<"Please enter the value you want to search for: ";
+                    int key;
+                    cin>>key;
+                    if(singlyLinkedList->search(key)){
+                        cout<<"The value '"<<key<<"' does exists in the list."<<endl;
+                    }
+                    else{
+                        cout<<"Sorry the element you asked for does not exist in the list."<<endl;
+                    }
+                    break;
 
             case 7: singlyLinkedList->printLinkedList();
                     break;
